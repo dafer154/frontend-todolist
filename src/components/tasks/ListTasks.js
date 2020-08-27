@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import TasksServices from '../../services/TasksService';
 import Task from './Task';
-import Form from 'react-bootstrap/Form'
 import './styles/ListTask.css';
 import { Button } from 'react-bootstrap';
 import AddTask from './AddTask';
@@ -112,28 +111,24 @@ export class ListTasks extends Component {
                     return open.title.toLowerCase().indexOf(query) !== -1;
                 })
                 return this.setState({ tasksOpen: filteredOpen })
-                break;
             case 'In-Progress':
                 const tasksInProgress = allTasks.filter((task) => task.status === 'In-Progress');
                 const filteredInProgress = tasksInProgress.filter((progress) => {
                     return progress.title.toLowerCase().indexOf(query) !== -1;
                 })
                 return this.setState({ tasksInProgress: filteredInProgress })
-                break;
             case 'Completed':
                 const tasksCompleted = allTasks.filter((task) => task.status === 'Completed');
                 const filteredCompleted = tasksCompleted.filter((completed) => {
                     return completed.title.toLowerCase().indexOf(query) !== -1;
                 })
                 return this.setState({ tasksCompleted: filteredCompleted })
-                break;
             case 'Archived':
                 const tasksArchived = allTasks.filter((task) => task.status === 'Archived');
                 const filteredArchived = tasksArchived.filter((archived) => {
                     return archived.title.toLowerCase().indexOf(query) !== -1;
                 })
                 return this.setState({ tasksArchived: filteredArchived })
-                break;
             default:
                 break;
         }

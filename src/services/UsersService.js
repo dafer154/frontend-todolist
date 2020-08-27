@@ -12,7 +12,15 @@ export default class UsersService {
 
     addUsers(username) {
         return axios.post(`${this.api.url}/add`, {
-            username: username,
+            username: username.username,
         });
+    }
+
+    userGetByid(id) {
+        return axios.get(`${this.api.url}/${id}`)
+    }
+
+    editsUsers(user, id) {
+        return axios.put(`${this.state.url}/${id}`, user);
     }
 }

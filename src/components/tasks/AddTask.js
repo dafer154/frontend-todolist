@@ -15,7 +15,7 @@ export class AddTask extends Component {
         userSelected: "",
         content: "",
         title: "",
-        status: "",
+        status: "Open",
         date: new Date(),
         listStatus: ['Open', 'In-progress', 'Completed', 'Archived'],
         editing: this.props.editing,
@@ -26,7 +26,7 @@ export class AddTask extends Component {
     getAllUsers() {
         this.state.usersService.getAllUsers().then((res) => {
             const allUsers = res.data.body;
-            this.setState({ users: allUsers })
+            this.setState({ users: allUsers, userSelected: allUsers[0].username })
         })
     }
 
@@ -35,14 +35,34 @@ export class AddTask extends Component {
     };
 
     handleClose() {
-        this.setState({ show: !this.state.show, id:'', editing: false}, () => {
+        this.setState({ show: !this.state.show, id: '', editing: false }, () => {
             this.props.handleShow(this.state.show)
         })
     }
 
+    taskGetById() {
+        console.log("oeee", this.state.id)
+        this.state.taskService.taskGetByid(this.state.id).then((res) => {
+
+            const task = res.data.body
+            console.log(task);
+            this.setState({
+                userSelected: task.author,
+                content: task.content,
+                title: task.title,
+                status: task.status,
+                date: task.date
+            })
+        })
+    }
+
+    // shouldComponentUpdate(nextProps, nextState){
+    //     console.log("ooooe", nextProps);
+    // }
+
     createNote = (e) => {
         e.preventDefault();
-        const newNote = {
+        const newTask = {
             title: this.state.title,
             content: this.state.content,
             date: this.state.date,
@@ -50,39 +70,28 @@ export class AddTask extends Component {
             status: this.state.status
         };
 
-        this.state.taskService.addTasks(newNote)
-            .then((res) => {
+        if (this.state.editing) {
+            this.state.taskService.editsTasks(newTask, this.state.id).then((res) => {
                 console.log(res);
                 window.location.href = "/listNotes";
             })
-            .catch((err) => console.error(err));
+                .catch((err) => console.error(err));
+        } else {
+            this.state.taskService.addTasks(newTask)
+                .then((res) => {
+                    console.log(res);
+                    window.location.href = "/listNotes";
+                })
+                .catch((err) => console.error(err));
+        }
 
-        // if (this.state.editing) {
-        //   this.state.notesService
-        //     .editNotes(this.state._id, newNote)
-        //     .then((res) => {
-        //       console.log(res);
-        //       window.location.href = "/listNotes";
-        //     })
-        //     .catch((err) => console.error(err));
-        // } else {
-        //   this.state.notesService
-        //     .createNotes(newNote)
-        //     .then((res) => {
-        //       console.log(res);
-        //       window.location.href = "/listNotes";
-        //     })
-        //     .catch((err) => console.error(err));
-        // }
     };
 
     componentDidMount() {
-        // const params = this.props.match.params;
         this.getAllUsers();
-        // this.getAllNotes();
-        // if (params.id) {
-        //   this.getNotesById(params.id);
-        // }
+        if (this.state.id !== '') {
+            this.taskGetById();
+        } else return false
     }
 
     //   getNotesById = (id) => {

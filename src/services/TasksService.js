@@ -17,4 +17,12 @@ export default class TasksService {
             title, content, author, status
         });
     }
+
+    taskGetByid(id){
+        return axios.get(`${this.api.url}/${id}`)
+    }
+
+    editsTasks(task, id) {
+        return axios.put(`${this.state.url}/${id}`, task);
+    }
 }

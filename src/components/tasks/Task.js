@@ -18,16 +18,12 @@ export class Task extends Component {
         switch (value) {
             case 'Open':
                 return "primary"
-                break;
             case 'In-Progress':
                 return "secondary"
-                break;
             case 'Completed':
                 return "success"
-                break;
             case 'Archived':
                 return "warning"
-                break;
             default:
                 break;
         }
