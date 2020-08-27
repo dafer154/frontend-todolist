@@ -1,24 +1,25 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { HashRouter as Router, Route } from 'react-router-dom';
+import ListUsers from './components/users/ListUsers';
+import ListTasks from './components/tasks/ListTasks';
+import Navigation from './components/shared/Navigation';
+import Main from './components/shared/Main';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Router>
+        <Navigation></Navigation>
+        <div className="container p-4">
+        <Route path="/" exact component={Main}></Route>
+        {/* <Route path="/editNotes/:id" component={CreateNote}></Route>
+        <Route path="/createNotes" component={CreateNote}></Route>
+        <Route path="/updateNotes" component={UdateNote}></Route> */}
+        <Route path="/listTasks" component={ListTasks}></Route>
+        <Route path="/listUsers" component={ListUsers}></Route>
+      </div>
+      </Router>
     </div>
   );
 }

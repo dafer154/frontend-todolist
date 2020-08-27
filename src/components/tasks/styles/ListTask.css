@@ -1,0 +1,22 @@
+.container-list{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+}
+
+.container-search{
+    width: 50%;
+}
+
+.container-status{
+    display: flex;
+    justify-content: space-around;
+    width: 69%;
+    padding: 40px;
+}
+
+.add-task{
+    padding-left: 87%;
+}

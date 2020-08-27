@@ -1,0 +1,8 @@
+.footer-custom {
+    display: flex;
+    justify-content: space-around;
+}
+
+.card-custom {
+    margin-bottom: 2rem;
+}
