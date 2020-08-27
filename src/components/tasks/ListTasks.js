@@ -18,7 +18,9 @@ export class ListTasks extends Component {
         tasksArchived: [],
         tasksInProgress: [],
         createtask: false,
-        query: ''
+        query: '',
+        id: '',
+        editing: false
     }
 
     componentDidMount() {
@@ -53,7 +55,7 @@ export class ListTasks extends Component {
     }
 
     changeShowModal(value) {
-        this.setState({ createtask: value });
+        this.setState({ createtask: value, id: "", editing: "" });
     }
 
     addTask() {
@@ -137,12 +139,16 @@ export class ListTasks extends Component {
         }
     }
 
+    editTask(id) {
+        this.setState({ createtask: true, editing: true, id: id })
+    }
+
 
     render() {
-        const { query, initialStatus, tasksOpen, tasksInProgress, tasksCompleted, tasksArchived, createtask } = this.state
+        const { query, initialStatus, tasksOpen, tasksInProgress, tasksCompleted, tasksArchived, createtask, editing, id } = this.state
         return (
             <div className="container-list">
-                {createtask ? <AddTask show={createtask} handleShow={(e) => this.changeShowModal(e)} /> : null}
+                {createtask ? <AddTask show={createtask} handleShow={(e) => this.changeShowModal(e)} edit={editing} id={id} /> : null}
                 <div className="add-task">
                     <Button onClick={(e) => { this.actionAddTask(e) }}>add Task</Button>
                 </div>
@@ -173,25 +179,25 @@ export class ListTasks extends Component {
                 {initialStatus === 'Open' ? <div>
                     {tasksOpen.map((task) => {
                         return (
-                            <Task key={task._id} task={task} />
+                            <Task key={task._id} task={task} handleEdit={(id) => this.editTask(id)} />
                         )
                     })}
                 </div> : initialStatus === "In-Progress" ? <div>
                     {tasksInProgress.map((task) => {
                         return (
-                            <Task key={task._id} task={task} />
+                            <Task key={task._id} task={task} handleEdit={(id) => this.editTask(id)} />
                         )
                     })}
                 </div> : initialStatus === "Completed" ? <div>
                     {tasksCompleted.map((task) => {
                         return (
-                            <Task key={task._id} task={task} />
+                            <Task key={task._id} task={task} handleEdit={(id) => this.editTask(id)} />
                         )
                     })}
                 </div> : initialStatus === "Archived" ? <div>
                     {tasksArchived.map((task) => {
                         return (
-                            <Task key={task._id} task={task} />
+                            <Task key={task._id} task={task} handleEdit={(id) => this.editTask(id)} />
                         )
                     })}
                 </div> : null}

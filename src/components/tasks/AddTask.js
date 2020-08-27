@@ -18,8 +18,8 @@ export class AddTask extends Component {
         status: "",
         date: new Date(),
         listStatus: ['Open', 'In-progress', 'Completed', 'Archived'],
-        editing: false,
-        _id: "",
+        editing: this.props.editing,
+        id: this.props.id,
     };
 
 
@@ -35,7 +35,7 @@ export class AddTask extends Component {
     };
 
     handleClose() {
-        this.setState({ show: !this.state.show }, () => {
+        this.setState({ show: !this.state.show, id:'', editing: false}, () => {
             this.props.handleShow(this.state.show)
         })
     }
@@ -104,6 +104,7 @@ export class AddTask extends Component {
     //   };
 
     render() {
+        console.log("EDITING", this.state.id);
         const { show } = this.state
         return (
             <Modal show={show} onHide={() => this.handleClose()}>

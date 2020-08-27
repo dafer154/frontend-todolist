@@ -10,6 +10,7 @@ export class Task extends Component {
     }
 
     editTask(id) {
+        this.props.handleEdit(id);
         console.log("ID", id)
     }
 
