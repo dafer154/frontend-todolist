@@ -10,7 +10,6 @@ export class ListUsers extends Component {
     state = {
         usersService: new UsersService(),
         users: [],
-        usersFiltered: [],
         createuser: false,
         query: '',
         id: '',
@@ -48,14 +47,11 @@ export class ListUsers extends Component {
 
     searchUser(e) {
         e.preventDefault();
-        const allUsers = this.state.users;
         const query = this.state.query
 
-        const userFiltered = allUsers.filter((user) => {
-            return user.username.toLowerCase().indexOf(query) !== -1;
+        this.usersService.searchUser(query).then((res)=>{
+            this.setState({ users: res.data.body })
         })
-
-        this.setState({ users: userFiltered })
     }
 
     editUser(id) {

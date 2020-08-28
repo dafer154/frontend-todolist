@@ -30,5 +30,9 @@ export default class TasksService {
         return axios.delete(`${this.api.url}/${id}`);
     }
 
+    unassignUser(id){
+        return axios.put(`${this.api.url}/unassignUser/${id}`)
+    }
+
 
 }

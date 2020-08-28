@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button'
 import './styles/Task.css'
+import Badge from 'react-bootstrap/Badge'
+import { format } from "timeago.js";
 
 export class Task extends Component {
 
@@ -15,6 +17,10 @@ export class Task extends Component {
 
     deleteTask(id) {
         this.props.handleDelete(id);
+    }
+
+    unassignUser(id) {
+        this.props.handleUnassign(id);
     }
 
     listColors(value) {
@@ -46,10 +52,21 @@ export class Task extends Component {
                     <Card.Text>
                         {task.content}
                     </Card.Text>
-                    <strong>{task.status}</strong>
+                    <div>
+
+                        <strong>Status: </strong><Badge variant={this.listColors(task.status)}>{task.status}</Badge>
+                    </div>
+                    <div>
+
+                        <strong>Author: </strong><span>{task.author}</span>
+                    </div>
+                    <div>
+
+                        <strong>Date: </strong><span>{format(task.date)}</span>
+                    </div>
                     <Card.Footer className="footer-custom">
                         <Button variant="primary" onClick={() => this.editTask(task._id)}>Edit</Button>
-                        <Button variant="warning">Unassigment</Button>
+                        <Button variant="warning" onClick={() => this.unassignUser(task._id)}>Unassigment</Button>
                     </Card.Footer>
                 </Card.Body>
             </Card>

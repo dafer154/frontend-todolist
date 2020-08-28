@@ -27,4 +27,8 @@ export default class UsersService {
     deleteUser(id){
         return axios.delete(`${this.api.url}/${id}`);
     }
+
+    searchUser(query){
+        return axios.post(`${this.api.url}/search`, query)
+    }
 }

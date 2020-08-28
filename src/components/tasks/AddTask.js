@@ -4,6 +4,8 @@ import UsersService from '../../services/UsersService';
 import Modal from 'react-bootstrap/Modal';
 import { Button } from 'react-bootstrap';
 import './styles/AddTask.css';
+import Form from 'react-bootstrap/Form'
+
 
 export class AddTask extends Component {
 
@@ -12,12 +14,13 @@ export class AddTask extends Component {
         taskService: new TaskService(),
         usersService: new UsersService(),
         users: [],
+        actionSuccess: false,
         userSelected: "",
         content: "",
         title: "",
         status: "Open",
         date: new Date(),
-        listStatus: ['Open', 'In-progress', 'Completed', 'Archived'],
+        listStatus: ['Open', 'In-Progress', 'Completed', 'Archived'],
         editing: this.props.edit,
         id: this.props.id,
     };
@@ -36,14 +39,13 @@ export class AddTask extends Component {
 
     handleClose() {
         this.setState({ show: !this.state.show, id: '', editing: false }, () => {
-            this.props.handleShow(this.state.show)
+            this.props.handleShow(this.state.show, this.state.actionSuccess)
         })
     }
 
     taskGetById() {
         this.state.taskService.taskGetByid(this.state.id).then((res) => {
             const task = res.data.body
-
             this.setState({
                 userSelected: task.author,
                 content: task.content,
@@ -66,11 +68,13 @@ export class AddTask extends Component {
 
         if (this.state.editing) {
             this.state.taskService.editsTasks(newTask, this.state.id).then((res) => {
+                this.setState({ actionSuccess: true })
                 this.handleClose();
             })
                 .catch((err) => console.error(err));
         } else {
             this.state.taskService.addTasks(newTask).then((res) => {
+                this.setState({ actionSuccess: true })
                 this.handleClose();
             })
                 .catch((err) => console.error(err));
@@ -85,20 +89,26 @@ export class AddTask extends Component {
         } else return false
     }
 
+    onChangeDate = (date) => {
+        console.log(date);
+        this.setState({ date });
+    };
+
     render() {
 
-        const { show } = this.state
+        const { show, editing } = this.state
         return (
-            <Modal show={show} onHide={() => this.handleClose()}>
+            <Modal show={show} onHide={() => this.handleClose()} centered>
                 <Modal.Body>
                     <div className="button-close">
                         <Button variant="secondary" className="button-close-custom" onClick={() => this.handleClose()}>X</Button>
                     </div>
                     <div>
                         <div className="card card-body">
-                            <h4>Create a Task</h4>
+                            <h4>{editing ? "Edit Task" : "Create a Task"}</h4>
 
                             <div className="form-group">
+                                <label>User</label>
                                 <select
                                     name="userSelected"
                                     id="userSelected"
@@ -115,6 +125,7 @@ export class AddTask extends Component {
                             </div>
 
                             <div className="form-group">
+                                <label>Status</label>
                                 <select
                                     name="status"
                                     id="statusSelected"
@@ -131,6 +142,7 @@ export class AddTask extends Component {
                             </div>
 
                             <div className="form-group">
+                                <label>Title</label>
                                 <input
                                     type="text"
                                     className="form-control"
@@ -143,6 +155,7 @@ export class AddTask extends Component {
                             </div>
 
                             <div className="form-group">
+                                <label>Content</label>
                                 <textarea
                                     name="content"
                                     id="content"
@@ -155,15 +168,6 @@ export class AddTask extends Component {
                                     required
                                 ></textarea>
                             </div>
-
-                            {/* <div className="form-group">
-                                <Datepicker
-                                    className="form-control w-100"
-                                    selected={this.state.date}
-                                    onChange={this.onChangeDate}
-                                    value={this.state.date}
-                                ></Datepicker>
-                            </div> */}
                         </div>
                     </div>
                 </Modal.Body>

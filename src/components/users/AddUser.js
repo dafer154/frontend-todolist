@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import UsersService from '../../services/UsersService';
 import Modal from 'react-bootstrap/Modal';
 import { Button } from 'react-bootstrap';
+import './styles/AddUser.css';
+import { Alerts } from '../shared/Alerts';
 
 export class AddUser extends Component {
 
@@ -59,13 +61,16 @@ export class AddUser extends Component {
     }
 
     render() {
-        const { show } = this.state
+        const { show, editing } = this.state
         return (
             <Modal show={show} onHide={() => this.handleClose()}>
                 <Modal.Body>
-                    <div className="col-md-6 offset-md-3">
+                    <div className="button-close">
+                        <Button variant="secondary" className="button-close-custom" onClick={() => this.handleClose()}>X</Button>
+                    </div>
+                    <div>
                         <div className="card card-body">
-                            <h4>Create a User</h4>
+                            <h4>{editing ? "Edit User" : "Create a User"}</h4>
 
                             <div className="form-group">
                                 <input
@@ -78,22 +83,13 @@ export class AddUser extends Component {
                                     required
                                 />
                             </div>
-
-                            <form onSubmit={this.createUser}>
-                                <button type="submit" className="btn btn-success">
-                                    Save
-            </button>
-                            </form>
                         </div>
                     </div>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={() => this.handleClose()}>
-                        Close
-          </Button>
-                    <Button variant="primary" onClick={() => this.handleClose()}>
-                        Save Changes
-          </Button>
+                    <form onSubmit={this.createUser}>
+                        <button type="submit" className="btn btn-success">Save</button>
+                    </form>
                 </Modal.Footer>
             </Modal>
         )

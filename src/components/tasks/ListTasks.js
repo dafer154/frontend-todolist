@@ -5,6 +5,8 @@ import './styles/ListTask.css';
 import { Button } from 'react-bootstrap';
 import AddTask from './AddTask';
 
+import { Alerts } from '../shared/Alerts';
+
 
 export class ListTasks extends Component {
 
@@ -20,12 +22,17 @@ export class ListTasks extends Component {
         createtask: false,
         query: '',
         id: '',
-        editing: false
+        editing: false,
+        notification: false
     }
 
     componentDidMount() {
         this.getAllTasks()
     }
+
+    /**
+     * Allow make a call to the api and classifed the tasks
+     */
 
     getAllTasks() {
         this.setState({
@@ -47,20 +54,42 @@ export class ListTasks extends Component {
         })
     }
 
-
+    /**
+     * Allow select the option ['Open', 'In-Progress', 'Archived', 'Completed'] on the checkbox 
+     */
     selectStatus(e, label) {
         this.setState({ initialStatus: label, query: '' })
     }
 
+    /*
+        Show The component CREATE and EDIT task
+    */
     actionAddTask(e) {
         e.preventDefault();
         this.setState({ createtask: true })
     }
 
-    changeShowModal(value) {
+    changeShowModal(value, action) {
+
+        //Set values to emptys
         this.setState({ createtask: value, id: "", editing: false });
+
+        //If you create or edit SUCCESS show the TOAST
+        if (action) {
+            this.setState({ notification: true })
+            setTimeout(() => {
+                this.setState({ notification: false })
+            }, 2000);
+        }
+
+        //Call to method for set the new state of all the TASKS
         this.getAllTasks();
     }
+
+
+    /**
+     * List of the checkbox ['Open', 'In-Progress', 'Completed', 'Archived']
+     */
 
     listStatus() {
         const status = ['Open', 'In-Progress', 'Completed', 'Archived']
@@ -139,24 +168,53 @@ export class ListTasks extends Component {
         this.setState({ createtask: true, editing: true, id: id })
     }
 
-    deleteTask(id) {
-        this.state.tasksService.deleteTask(id).then((res) => {
-            this.getAllTasks()
-        })
+    deleteTask = (id) => {
+        if (window.confirm("Are you sure delete this Task?")) {
+            this.state.tasksService.deleteTask(id).then((res) => {
+                this.getAllTasks()
+                this.setState({ notification: true })
+                setTimeout(() => {
+                    this.setState({ notification: false })
+                }, 2000);
+            })
+        };
+    }
+
+    unassignUser(id) {
+        if (window.confirm("Are you sure delete this User in the task?")) {
+            this.state.tasksService.unassignUser(id).then((res) => {
+                this.getAllTasks()
+                this.setState({ notification: true })
+                setTimeout(() => {
+                    this.setState({ notification: false })
+                }, 2000);
+            })
+        }
     }
 
 
     render() {
-        const { query, initialStatus, tasksOpen, tasksInProgress, tasksCompleted, tasksArchived, createtask, editing, id } = this.state
+        const { query,
+            initialStatus,
+            tasksOpen,
+            tasksInProgress,
+            tasksCompleted,
+            tasksArchived,
+            createtask,
+            editing,
+            id,
+            notification } = this.state
         return (
             <div className="container-list">
+                {
+                    notification ? <Alerts /> : null
+                }
                 <div><h1>List Tasks</h1></div>
-                {createtask ? <AddTask show={createtask} handleShow={(e) => this.changeShowModal(e)} edit={editing} id={id} /> : null}
+                {createtask ? <AddTask show={createtask} handleShow={(e, action) => this.changeShowModal(e, action)} edit={editing} id={id} /> : null}
                 <div className="add-task">
                     <Button onClick={(e) => { this.actionAddTask(e) }}>add Task</Button>
                 </div>
                 <div className="container-search">
-
                     <form className="form-inline my-2 my-lg-0">
                         <input style={{ width: "85%" }}
                             className="form-control mr-sm-2"
@@ -172,9 +230,8 @@ export class ListTasks extends Component {
                             onClick={(e) => this.searchTask(e)}
                         >
                             Search
-              </button>
+                        </button>
                     </form>
-
                 </div>
                 <div className="container-status">
                     {this.listStatus()}
@@ -182,25 +239,25 @@ export class ListTasks extends Component {
                 {initialStatus === 'Open' ? <div className="wrapp-tasks">
                     {tasksOpen.map((task) => {
                         return (
-                            <Task key={task._id} task={task} handleEdit={(id) => this.editTask(id)} handleDelete={(id) => this.deleteTask(id)} />
+                            <Task key={task._id} task={task} handleEdit={(id) => this.editTask(id)} handleDelete={(id) => this.deleteTask(id)} handleUnassign={(id) => this.unassignUser(id)} />
                         )
                     })}
                 </div> : initialStatus === "In-Progress" ? <div className="wrapp-tasks">
                     {tasksInProgress.map((task) => {
                         return (
-                            <Task key={task._id} task={task} handleEdit={(id) => this.editTask(id)} handleDelete={(id) => this.deleteTask(id)} />
+                            <Task key={task._id} task={task} handleEdit={(id) => this.editTask(id)} handleDelete={(id) => this.deleteTask(id)} handleUnassign={(id) => this.unassignUser(id)} />
                         )
                     })}
                 </div> : initialStatus === "Completed" ? <div className="wrapp-tasks">
                     {tasksCompleted.map((task) => {
                         return (
-                            <Task key={task._id} task={task} handleEdit={(id) => this.editTask(id)} handleDelete={(id) => this.deleteTask(id)} />
+                            <Task key={task._id} task={task} handleEdit={(id) => this.editTask(id)} handleDelete={(id) => this.deleteTask(id)} handleUnassign={(id) => this.unassignUser(id)} />
                         )
                     })}
                 </div> : initialStatus === "Archived" ? <div className="wrapp-tasks">
                     {tasksArchived.map((task) => {
                         return (
-                            <Task key={task._id} task={task} handleEdit={(id) => this.editTask(id)} handleDelete={(id) => this.deleteTask(id)} />
+                            <Task key={task._id} task={task} handleEdit={(id) => this.editTask(id)} handleDelete={(id) => this.deleteTask(id)} handleUnassign={(id) => this.unassignUser(id)} />
                         )
                     })}
                 </div> : null}

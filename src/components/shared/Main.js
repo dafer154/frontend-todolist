@@ -5,15 +5,14 @@ import Jumbotron from 'react-bootstrap/Jumbotron'
 const Main = () => {
     return (
         <Jumbotron>
-            <h1>Hello, world!</h1>
+            <h1>Hello, Everybody!</h1>
             <p>
-                This is a simple hero unit, a simple jumbotron-style component for calling
-                extra attention to featured content or information.
+                This project is similar to tool Trello, for enlarge the knowledge in ReactJS
             </p>
             <p>
                 <NavLink
                     className="btn btn-primary btn-lg"
-                    to="/createNotes"
+                    to="/listTasks"
                     role="button"
                 >
                     List Tasks!
