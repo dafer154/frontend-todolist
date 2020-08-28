@@ -36,6 +36,7 @@ export class ListUsers extends Component {
 
     changeShowModal(value) {
         this.setState({ createuser: value, id: "", editing: "" });
+        this.getAllUsers();
     }
 
     handleChange(e) {
@@ -60,6 +61,12 @@ export class ListUsers extends Component {
 
     editUser(id) {
         this.setState({ createuser: true, editing: true, id: id })
+    }
+
+    deleteUser(id) {
+        this.state.usersService.deleteUser(id).then((res)=>{
+            this.getAllUsers()
+        })
     }
 
     render() {
@@ -94,7 +101,7 @@ export class ListUsers extends Component {
                 <div>
                     {users.map((user) => {
                         return (
-                            <User key={user._id} user={user} handleEdit={(id) => this.editUser(id)} />
+                            <User key={user._id} user={user} handleDelete={(id) => this.deleteUser(id)} handleEdit={(id) => this.editUser(id)} />
                         )
                     })}
                 </div>

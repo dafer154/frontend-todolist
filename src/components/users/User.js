@@ -13,6 +13,10 @@ export class User extends Component {
         this.props.handleEdit(id);
     }
 
+    deleteUser(id) {
+        this.props.handleDelete(id);
+    }
+
     render() {
         const { user } = this.state
         return (
@@ -21,7 +25,7 @@ export class User extends Component {
                     <Card.Title>{user.username}</Card.Title>
                     <Card.Footer className="footer-custom">
                         <Button variant="primary" onClick={() => this.editUser(user._id)}>Edit</Button>
-                        <Button variant="danger">Delete</Button>
+                        <Button variant="danger" onClick={() => this.deleteUser(user._id)}>Delete</Button>
                     </Card.Footer>
                 </Card.Body>
             </Card>

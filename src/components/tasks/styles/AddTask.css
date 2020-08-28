@@ -1,0 +1,9 @@
+.button-close {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.button-close-custom {
+    margin-bottom: 10px;
+    border-radius: 50px;
+}

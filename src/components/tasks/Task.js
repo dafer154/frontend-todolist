@@ -14,6 +14,10 @@ export class Task extends Component {
         console.log("ID", id)
     }
 
+    deleteTask(id){
+        this.props.handleDelete(id);
+    }
+
     listColors(value) {
         switch (value) {
             case 'Open':
@@ -32,16 +36,21 @@ export class Task extends Component {
     render() {
         const { task } = this.state
         return (
-            <Card className="card-custom" border={this.listColors(task.status)} style={{ width: '40rem' }}>
+            <Card className="card-custom text-left" border={this.listColors(task.status)} style={{ width: '17rem' }}>
                 <Card.Body>
-                    <Card.Title>{task.title}</Card.Title>
+                    <Card.Title>
+                        <div className="custom-title">
+                            <div>{task.title}</div>
+                            <div><Button  onClick={() => this.deleteTask(task._id)} className="custom-delete" variant="danger">X</Button></div>
+                        </div>
+                    </Card.Title>
                     <Card.Text>
                         {task.content}
                     </Card.Text>
                     <strong>{task.status}</strong>
                     <Card.Footer className="footer-custom">
                         <Button variant="primary" onClick={() => this.editTask(task._id)}>Edit</Button>
-                        <Button variant="danger">Unassigment</Button>
+                        <Button variant="warning">Unassigment</Button>
                     </Card.Footer>
                 </Card.Body>
             </Card>

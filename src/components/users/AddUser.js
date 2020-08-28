@@ -8,7 +8,7 @@ export class AddUser extends Component {
     state = {
         show: this.props.show,
         id: this.props.id,
-        editing: this.props.editing,
+        editing: this.props.edit,
         usersService: new UsersService(),
         username: ''
     }
@@ -42,16 +42,16 @@ export class AddUser extends Component {
         };
 
         if (this.state.editing) {
-            this.state.usersService.editUsers(newUser, this.state.id).then((res) => {
+            this.state.usersService.editUser(newUser, this.state.id).then((res) => {
                 console.log(res);
-                window.location.href = "/listUsers";
+                this.handleClose();
             })
                 .catch((err) => console.error(err));
         } else {
             this.state.usersService.addUsers(newUser)
                 .then((res) => {
                     console.log(res);
-                    window.location.href = "/listUsers";
+                    this.handleClose();
                 })
                 .catch((err) => console.error(err));
         }

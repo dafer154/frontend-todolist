@@ -3,7 +3,7 @@ import TaskService from '../../services/TasksService';
 import UsersService from '../../services/UsersService';
 import Modal from 'react-bootstrap/Modal';
 import { Button } from 'react-bootstrap';
-
+import './styles/AddTask.css';
 
 export class AddTask extends Component {
 
@@ -18,7 +18,7 @@ export class AddTask extends Component {
         status: "Open",
         date: new Date(),
         listStatus: ['Open', 'In-progress', 'Completed', 'Archived'],
-        editing: this.props.editing,
+        editing: this.props.edit,
         id: this.props.id,
     };
 
@@ -41,7 +41,6 @@ export class AddTask extends Component {
     }
 
     taskGetById() {
-        console.log("oeee", this.state.id)
         this.state.taskService.taskGetByid(this.state.id).then((res) => {
 
             const task = res.data.body
@@ -56,10 +55,6 @@ export class AddTask extends Component {
         })
     }
 
-    // shouldComponentUpdate(nextProps, nextState){
-    //     console.log("ooooe", nextProps);
-    // }
-
     createNote = (e) => {
         e.preventDefault();
         const newTask = {
@@ -71,16 +66,17 @@ export class AddTask extends Component {
         };
 
         if (this.state.editing) {
+            console.log("oooooeee EDIT");
             this.state.taskService.editsTasks(newTask, this.state.id).then((res) => {
                 console.log(res);
-                window.location.href = "/listNotes";
+                this.handleClose();
             })
-                .catch((err) => console.error(err));
+            .catch((err) => console.error(err));
         } else {
             this.state.taskService.addTasks(newTask)
                 .then((res) => {
                     console.log(res);
-                    window.location.href = "/listNotes";
+                    this.handleClose();
                 })
                 .catch((err) => console.error(err));
         }
@@ -113,12 +109,19 @@ export class AddTask extends Component {
     //   };
 
     render() {
-        console.log("EDITING", this.state.id);
-        const { show } = this.state
+
+        const { show, editing } = this.state
+        console.log("EDITING", editing);
         return (
             <Modal show={show} onHide={() => this.handleClose()}>
                 <Modal.Body>
-                    <div className="col-md-6 offset-md-3">
+                    <div className="button-close">
+
+                        <Button variant="secondary" className="button-close-custom" onClick={() => this.handleClose()}>
+                            X
+          </Button>
+                    </div>
+                    <div>
                         <div className="card card-body">
                             <h4>Create a Task</h4>
 
@@ -189,21 +192,14 @@ export class AddTask extends Component {
                                 ></Datepicker>
                             </div> */}
 
-                            <form onSubmit={this.createNote}>
-                                <button type="submit" className="btn btn-success">
-                                    Save
-            </button>
-                            </form>
+
                         </div>
                     </div>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={() => this.handleClose()}>
-                        Close
-          </Button>
-                    <Button variant="primary" onClick={() => this.handleClose()}>
-                        Save Changes
-          </Button>
+                    <form onSubmit={this.createNote}>
+                        <button type="submit" className="btn btn-success">Save</button>
+                    </form>
                 </Modal.Footer>
             </Modal>
         )

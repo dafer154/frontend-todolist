@@ -8,6 +8,7 @@ import AddTask from './AddTask';
 
 export class ListTasks extends Component {
 
+
     state = {
         tasksService: new TasksServices(),
         initialStatus: 'Open',
@@ -54,7 +55,8 @@ export class ListTasks extends Component {
     }
 
     changeShowModal(value) {
-        this.setState({ createtask: value, id: "", editing: "" });
+        this.setState({ createtask: value, id: "", editing: false });
+        this.getAllTasks();
     }
 
     addTask() {
@@ -138,11 +140,18 @@ export class ListTasks extends Component {
         this.setState({ createtask: true, editing: true, id: id })
     }
 
+    deleteTask(id) {
+        this.state.tasksService.deleteTask(id).then((res) => {
+            this.getAllTasks()
+        })
+    }
+
 
     render() {
         const { query, initialStatus, tasksOpen, tasksInProgress, tasksCompleted, tasksArchived, createtask, editing, id } = this.state
         return (
             <div className="container-list">
+                <div><h1>List Tasks</h1></div>
                 {createtask ? <AddTask show={createtask} handleShow={(e) => this.changeShowModal(e)} edit={editing} id={id} /> : null}
                 <div className="add-task">
                     <Button onClick={(e) => { this.actionAddTask(e) }}>add Task</Button>
@@ -171,28 +180,28 @@ export class ListTasks extends Component {
                 <div className="container-status">
                     {this.listStatus()}
                 </div>
-                {initialStatus === 'Open' ? <div>
+                {initialStatus === 'Open' ? <div className="wrapp-tasks">
                     {tasksOpen.map((task) => {
                         return (
-                            <Task key={task._id} task={task} handleEdit={(id) => this.editTask(id)} />
+                            <Task key={task._id} task={task} handleEdit={(id) => this.editTask(id)} handleDelete={(id) => this.deleteTask(id)} />
                         )
                     })}
-                </div> : initialStatus === "In-Progress" ? <div>
+                </div> : initialStatus === "In-Progress" ? <div className="wrapp-tasks">
                     {tasksInProgress.map((task) => {
                         return (
-                            <Task key={task._id} task={task} handleEdit={(id) => this.editTask(id)} />
+                            <Task key={task._id} task={task} handleEdit={(id) => this.editTask(id)} handleDelete={(id) => this.deleteTask(id)} />
                         )
                     })}
-                </div> : initialStatus === "Completed" ? <div>
+                </div> : initialStatus === "Completed" ? <div className="wrapp-tasks">
                     {tasksCompleted.map((task) => {
                         return (
-                            <Task key={task._id} task={task} handleEdit={(id) => this.editTask(id)} />
+                            <Task key={task._id} task={task} handleEdit={(id) => this.editTask(id)} handleDelete={(id) => this.deleteTask(id)} />
                         )
                     })}
-                </div> : initialStatus === "Archived" ? <div>
+                </div> : initialStatus === "Archived" ? <div className="wrapp-tasks">
                     {tasksArchived.map((task) => {
                         return (
-                            <Task key={task._id} task={task} handleEdit={(id) => this.editTask(id)} />
+                            <Task key={task._id} task={task} handleEdit={(id) => this.editTask(id)} handleDelete={(id) => this.deleteTask(id)} />
                         )
                     })}
                 </div> : null}

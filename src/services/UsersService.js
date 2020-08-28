@@ -20,7 +20,11 @@ export default class UsersService {
         return axios.get(`${this.api.url}/${id}`)
     }
 
-    editsUsers(user, id) {
-        return axios.put(`${this.state.url}/${id}`, user);
+    editUser(user, id) {
+        return axios.put(`${this.api.url}/${id}`, user);
+    }
+
+    deleteUser(id){
+        return axios.delete(`${this.api.url}/${id}`);
     }
 }

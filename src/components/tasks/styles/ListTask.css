@@ -6,6 +6,12 @@
     align-items: center;
 }
 
+.wrapp-tasks{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
 .container-search{
     width: 50%;
 }
