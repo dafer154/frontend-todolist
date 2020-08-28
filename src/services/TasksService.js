@@ -23,8 +23,6 @@ export default class TasksService {
     }
 
     editsTasks(task, id) {
-        console.log("ID DAVID", id);
-        console.log("TASKKKK", task)
         return axios.put(`${this.api.url}/${id}`, task);
     }
 

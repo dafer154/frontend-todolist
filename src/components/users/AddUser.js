@@ -24,11 +24,8 @@ export class AddUser extends Component {
     }
 
     userGetById() {
-        console.log("oeee", this.state.id)
         this.state.usersService.userGetByid(this.state.id).then((res) => {
-
             const user = res.data.body
-            console.log(user);
             this.setState({
                 username: user.username
             })
@@ -43,16 +40,13 @@ export class AddUser extends Component {
 
         if (this.state.editing) {
             this.state.usersService.editUser(newUser, this.state.id).then((res) => {
-                console.log(res);
                 this.handleClose();
             })
                 .catch((err) => console.error(err));
         } else {
-            this.state.usersService.addUsers(newUser)
-                .then((res) => {
-                    console.log(res);
-                    this.handleClose();
-                })
+            this.state.usersService.addUsers(newUser).then((res) => {
+                this.handleClose();
+            })
                 .catch((err) => console.error(err));
         }
 
@@ -64,9 +58,7 @@ export class AddUser extends Component {
         } else return false
     }
 
-
     render() {
-        console.log("EDITING", this.state.id);
         const { show } = this.state
         return (
             <Modal show={show} onHide={() => this.handleClose()}>

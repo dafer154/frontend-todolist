@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { HashRouter as Router, Route, browserHistory } from 'react-router-dom';
+import { HashRouter as Router, Route} from 'react-router-dom';
 import ListUsers from './components/users/ListUsers';
 import ListTasks from './components/tasks/ListTasks';
 import Navigation from './components/shared/Navigation';

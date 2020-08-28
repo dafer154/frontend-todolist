@@ -28,12 +28,16 @@ export class ListTasks extends Component {
     }
 
     getAllTasks() {
+        this.setState({
+            tasksAll: [],
+            tasksOpen: [],
+            tasksCompleted: [],
+            tasksArchived: [],
+            tasksInProgress: []
+        });
         this.state.tasksService.getAllTasks().then((res) => {
 
-
             const tasksAll = res.data.body;
-            console.log("add", tasksAll)
-
             const tasksOpen = tasksAll.filter((task) => task.status === 'Open');
             const tasksCompleted = tasksAll.filter((task) => task.status === 'Completed');
             const tasksInProgress = tasksAll.filter((task) => task.status === 'In-Progress');
@@ -50,17 +54,12 @@ export class ListTasks extends Component {
 
     actionAddTask(e) {
         e.preventDefault();
-        console.log("oeee MODAL TASK")
         this.setState({ createtask: true })
     }
 
     changeShowModal(value) {
         this.setState({ createtask: value, id: "", editing: false });
         this.getAllTasks();
-    }
-
-    addTask() {
-
     }
 
     listStatus() {

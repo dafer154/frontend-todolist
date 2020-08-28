@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import UsersService from '../../services/UsersService';
 import User from './User';
-import Form from 'react-bootstrap/Form'
 import './styles/ListUsers.css';
 import { Button } from 'react-bootstrap';
 import AddUser from './AddUser';
@@ -23,6 +22,7 @@ export class ListUsers extends Component {
     }
 
     getAllUsers() {
+        this.setState({ users: [] });
         this.state.usersService.getAllUsers().then((res) => {
             this.setState({ users: res.data.body })
         })
@@ -30,12 +30,11 @@ export class ListUsers extends Component {
 
     actionAddUser(e) {
         e.preventDefault();
-        console.log("oeee MODAL TASK")
         this.setState({ createuser: true })
     }
 
     changeShowModal(value) {
-        this.setState({ createuser: value, id: "", editing: "" });
+        this.setState({ createuser: value, id: "", editing: false });
         this.getAllUsers();
     }
 
@@ -64,7 +63,7 @@ export class ListUsers extends Component {
     }
 
     deleteUser(id) {
-        this.state.usersService.deleteUser(id).then((res)=>{
+        this.state.usersService.deleteUser(id).then((res) => {
             this.getAllUsers()
         })
     }

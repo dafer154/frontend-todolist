@@ -42,9 +42,8 @@ export class AddTask extends Component {
 
     taskGetById() {
         this.state.taskService.taskGetByid(this.state.id).then((res) => {
-
             const task = res.data.body
-            console.log(task);
+
             this.setState({
                 userSelected: task.author,
                 content: task.content,
@@ -66,18 +65,14 @@ export class AddTask extends Component {
         };
 
         if (this.state.editing) {
-            console.log("oooooeee EDIT");
             this.state.taskService.editsTasks(newTask, this.state.id).then((res) => {
-                console.log(res);
                 this.handleClose();
             })
-            .catch((err) => console.error(err));
+                .catch((err) => console.error(err));
         } else {
-            this.state.taskService.addTasks(newTask)
-                .then((res) => {
-                    console.log(res);
-                    this.handleClose();
-                })
+            this.state.taskService.addTasks(newTask).then((res) => {
+                this.handleClose();
+            })
                 .catch((err) => console.error(err));
         }
 
@@ -90,36 +85,14 @@ export class AddTask extends Component {
         } else return false
     }
 
-    //   getNotesById = (id) => {
-    //     this.state.notesService
-    //       .getNoteById(id)
-    //       .then((res) => {
-    //         console.log(res);
-    //         const note = res.data.body;
-    //         this.setState({
-    //           editing: true,
-    //           _id: note._id,
-    //           userSelected: note.author,
-    //           content: note.content,
-    //           title: note.title,
-    //           date: new Date(note.date),
-    //         });
-    //       })
-    //       .catch((err) => console.error(err));
-    //   };
-
     render() {
 
-        const { show, editing } = this.state
-        console.log("EDITING", editing);
+        const { show } = this.state
         return (
             <Modal show={show} onHide={() => this.handleClose()}>
                 <Modal.Body>
                     <div className="button-close">
-
-                        <Button variant="secondary" className="button-close-custom" onClick={() => this.handleClose()}>
-                            X
-          </Button>
+                        <Button variant="secondary" className="button-close-custom" onClick={() => this.handleClose()}>X</Button>
                     </div>
                     <div>
                         <div className="card card-body">
@@ -191,8 +164,6 @@ export class AddTask extends Component {
                                     value={this.state.date}
                                 ></Datepicker>
                             </div> */}
-
-
                         </div>
                     </div>
                 </Modal.Body>

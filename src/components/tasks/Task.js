@@ -11,10 +11,9 @@ export class Task extends Component {
 
     editTask(id) {
         this.props.handleEdit(id);
-        console.log("ID", id)
     }
 
-    deleteTask(id){
+    deleteTask(id) {
         this.props.handleDelete(id);
     }
 
@@ -41,7 +40,7 @@ export class Task extends Component {
                     <Card.Title>
                         <div className="custom-title">
                             <div>{task.title}</div>
-                            <div><Button  onClick={() => this.deleteTask(task._id)} className="custom-delete" variant="danger">X</Button></div>
+                            <div><Button onClick={() => this.deleteTask(task._id)} className="custom-delete" variant="danger">X</Button></div>
                         </div>
                     </Card.Title>
                     <Card.Text>
