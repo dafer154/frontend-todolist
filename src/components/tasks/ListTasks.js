@@ -23,7 +23,8 @@ export class ListTasks extends Component {
         query: '',
         id: '',
         editing: false,
-        notification: false
+        notification: false,
+        messageAlert: ''
     }
 
     componentDidMount() {
@@ -180,6 +181,22 @@ export class ListTasks extends Component {
         };
     }
 
+
+    messageAlert(value) {
+        switch (value) {
+            case 'edit':
+                return this.setState({ messageAlert: "Success EDIT" })
+            case 'delete':
+                return this.setState({ messageAlert: "Success DELETE" })
+            case 'add':
+                return this.setState({ messageAlert: "Success ADD" })
+            case 'unassign':
+                return this.setState({ messageAlert: "Success UNASSIGN user" })
+            default:
+                break;
+        }
+    }
+
     unassignUser(id) {
         if (window.confirm("Are you sure delete this User in the task?")) {
             this.state.tasksService.unassignUser(id).then((res) => {
@@ -207,7 +224,7 @@ export class ListTasks extends Component {
         return (
             <div className="container-list">
                 {
-                    notification ? <Alerts /> : null
+                    notification ? <Alerts message={"oeee"} /> : null
                 }
                 <div><h1>List Tasks</h1></div>
                 {createtask ? <AddTask show={createtask} handleShow={(e, action) => this.changeShowModal(e, action)} edit={editing} id={id} /> : null}
@@ -236,31 +253,31 @@ export class ListTasks extends Component {
                 <div className="container-status">
                     {this.listStatus()}
                 </div>
-                {initialStatus === 'Open' ? <div className="wrapp-tasks">
+                {initialStatus === 'Open' && tasksOpen.length !== 0 ? <div className="wrapp-tasks">
                     {tasksOpen.map((task) => {
                         return (
                             <Task key={task._id} task={task} handleEdit={(id) => this.editTask(id)} handleDelete={(id) => this.deleteTask(id)} handleUnassign={(id) => this.unassignUser(id)} />
                         )
                     })}
-                </div> : initialStatus === "In-Progress" ? <div className="wrapp-tasks">
+                </div> : initialStatus === "In-Progress" && tasksInProgress.length !== 0 ? <div className="wrapp-tasks">
                     {tasksInProgress.map((task) => {
                         return (
                             <Task key={task._id} task={task} handleEdit={(id) => this.editTask(id)} handleDelete={(id) => this.deleteTask(id)} handleUnassign={(id) => this.unassignUser(id)} />
                         )
                     })}
-                </div> : initialStatus === "Completed" ? <div className="wrapp-tasks">
+                </div> : initialStatus === "Completed" && tasksCompleted.length !== 0 ? <div className="wrapp-tasks">
                     {tasksCompleted.map((task) => {
                         return (
                             <Task key={task._id} task={task} handleEdit={(id) => this.editTask(id)} handleDelete={(id) => this.deleteTask(id)} handleUnassign={(id) => this.unassignUser(id)} />
                         )
                     })}
-                </div> : initialStatus === "Archived" ? <div className="wrapp-tasks">
+                </div> : initialStatus === "Archived" && tasksArchived.length !== 0 ? <div className="wrapp-tasks">
                     {tasksArchived.map((task) => {
                         return (
                             <Task key={task._id} task={task} handleEdit={(id) => this.editTask(id)} handleDelete={(id) => this.deleteTask(id)} handleUnassign={(id) => this.unassignUser(id)} />
                         )
                     })}
-                </div> : null}
+                </div> : <h5>There are no tasks to show</h5>}
 
             </div>
         )

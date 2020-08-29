@@ -3,7 +3,6 @@ import UsersService from '../../services/UsersService';
 import Modal from 'react-bootstrap/Modal';
 import { Button } from 'react-bootstrap';
 import './styles/AddUser.css';
-import { Alerts } from '../shared/Alerts';
 
 export class AddUser extends Component {
 
@@ -12,7 +11,8 @@ export class AddUser extends Component {
         id: this.props.id,
         editing: this.props.edit,
         usersService: new UsersService(),
-        username: ''
+        username: '',
+        actionSuccess: false,
     }
 
     onInputChange = (e) => {
@@ -21,7 +21,7 @@ export class AddUser extends Component {
 
     handleClose() {
         this.setState({ show: !this.state.show, id: '', editing: false }, () => {
-            this.props.handleShow(this.state.show)
+            this.props.handleShow(this.state.show, this.state.actionSuccess)
         })
     }
 
@@ -42,11 +42,13 @@ export class AddUser extends Component {
 
         if (this.state.editing) {
             this.state.usersService.editUser(newUser, this.state.id).then((res) => {
+                this.setState({ actionSuccess: true })
                 this.handleClose();
             })
                 .catch((err) => console.error(err));
         } else {
             this.state.usersService.addUsers(newUser).then((res) => {
+                this.setState({ actionSuccess: true })
                 this.handleClose();
             })
                 .catch((err) => console.error(err));
@@ -73,6 +75,7 @@ export class AddUser extends Component {
                             <h4>{editing ? "Edit User" : "Create a User"}</h4>
 
                             <div className="form-group">
+                                <label>Username</label>
                                 <input
                                     type="text"
                                     className="form-control"

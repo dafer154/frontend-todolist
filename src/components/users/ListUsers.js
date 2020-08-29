@@ -34,8 +34,16 @@ export class ListUsers extends Component {
         this.setState({ createuser: true })
     }
 
-    changeShowModal(value) {
+    changeShowModal(value, action) {
         this.setState({ createuser: value, id: "", editing: false });
+        
+        if (action) {
+            this.setState({ notification: true })
+            setTimeout(() => {
+                this.setState({ notification: false })
+            }, 2000);
+        }
+        
         this.getAllUsers();
     }
 
@@ -51,8 +59,6 @@ export class ListUsers extends Component {
     searchUser(e) {
         e.preventDefault();
         const query = this.state.query
-        console.log("QUERRY", query);
-
         this.state.usersService.searchUser(query).then((res) => {
             this.setState({ users: res.data.body })
         })
@@ -82,7 +88,7 @@ export class ListUsers extends Component {
                     notification ? <Alerts /> : null
                 }
                 <div><h1>List Users</h1></div>
-                {createuser ? <AddUser show={createuser} handleShow={(e) => this.changeShowModal(e)} edit={editing} id={id} /> : null}
+                {createuser ? <AddUser show={createuser} handleShow={(e, action) => this.changeShowModal(e, action)} edit={editing} id={id} /> : null}
                 <div className="add-task">
                     <Button onClick={(e) => { this.actionAddUser(e) }}>Add User</Button>
                 </div>
@@ -108,11 +114,11 @@ export class ListUsers extends Component {
 
                 </div>
                 <div className="wrapp-users">
-                    {users.map((user) => {
+                    {users.length !== 0 ? users.map((user) => {
                         return (
                             <User key={user._id} user={user} handleDelete={(id) => this.deleteUser(id)} handleEdit={(id) => this.editUser(id)} />
                         )
-                    })}
+                    }) : <h5>There are no users to show</h5>}
                 </div>
 
             </div>

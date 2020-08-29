@@ -2,7 +2,13 @@ import React, { Component } from 'react'
 import Alert from 'react-bootstrap/Alert'
 
 export class Alerts extends Component {
+    
+    state={
+        message: this.props.message
+    }
+    
     render() {
+        const {message} = this.state
         return (
             <div
                 style={{
@@ -12,7 +18,8 @@ export class Alerts extends Component {
                 }}
             >
             <Alert variant="success">
-                    This is a success alert—check it out!
+                {/* {message}    */}
+                TEST
             </Alert>
             </div>
         )
