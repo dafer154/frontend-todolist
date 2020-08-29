@@ -4,6 +4,7 @@ import User from './User';
 import './styles/ListUsers.css';
 import { Button } from 'react-bootstrap';
 import AddUser from './AddUser';
+import { Alerts } from '../shared/Alerts';
 
 export class ListUsers extends Component {
 
@@ -13,7 +14,8 @@ export class ListUsers extends Component {
         createuser: false,
         query: '',
         id: '',
-        editing: false
+        editing: false,
+        notification: false
     }
 
     componentDidMount() {
@@ -51,7 +53,7 @@ export class ListUsers extends Component {
         const query = this.state.query
         console.log("QUERRY", query);
 
-        this.state.usersService.searchUser(query).then((res)=>{
+        this.state.usersService.searchUser(query).then((res) => {
             this.setState({ users: res.data.body })
         })
     }
@@ -61,15 +63,25 @@ export class ListUsers extends Component {
     }
 
     deleteUser(id) {
-        this.state.usersService.deleteUser(id).then((res) => {
-            this.getAllUsers()
-        })
+        if (window.confirm("Are you sure delete this User?")) {
+            this.state.usersService.deleteUser(id).then((res) => {
+                this.getAllUsers()
+                this.setState({ notification: true })
+                setTimeout(() => {
+                    this.setState({ notification: false })
+                }, 2000);
+            })
+        }
     }
 
     render() {
-        const { query, createuser, editing, id, users } = this.state
+        const { query, createuser, editing, id, users, notification } = this.state
         return (
             <div className="container-list">
+                {
+                    notification ? <Alerts /> : null
+                }
+                <div><h1>List Users</h1></div>
                 {createuser ? <AddUser show={createuser} handleShow={(e) => this.changeShowModal(e)} edit={editing} id={id} /> : null}
                 <div className="add-task">
                     <Button onClick={(e) => { this.actionAddUser(e) }}>Add User</Button>
@@ -95,7 +107,7 @@ export class ListUsers extends Component {
                     </form>
 
                 </div>
-                <div>
+                <div className="wrapp-users">
                     {users.map((user) => {
                         return (
                             <User key={user._id} user={user} handleDelete={(id) => this.deleteUser(id)} handleEdit={(id) => this.editUser(id)} />

@@ -20,9 +20,9 @@ export class User extends Component {
     render() {
         const { user } = this.state
         return (
-            <Card className="card-custom" border="primary" style={{ width: '40rem' }}>
+            <Card className="card-custom" border="primary" style={{ width: '17rem' }}>
                 <Card.Body>
-                    <Card.Title>{user.username}</Card.Title>
+                    <Card.Text>{user.username}</Card.Text>
                     <Card.Footer className="footer-custom">
                         <Button variant="primary" onClick={() => this.editUser(user._id)}>Edit</Button>
                         <Button variant="danger" onClick={() => this.deleteUser(user._id)}>Delete</Button>

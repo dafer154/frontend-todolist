@@ -29,7 +29,7 @@ export class AddTask extends Component {
     getAllUsers() {
         this.state.usersService.getAllUsers().then((res) => {
             const allUsers = res.data.body;
-            this.setState({ users: allUsers, userSelected: allUsers[0].username })
+            this.setState({ users: allUsers, userSelected: allUsers.length !== 0 ? allUsers[0].username : '' })
         })
     }
 
@@ -96,7 +96,7 @@ export class AddTask extends Component {
 
     render() {
 
-        const { show, editing } = this.state
+        const { show, editing, users, listStatus } = this.state
         return (
             <Modal show={show} onHide={() => this.handleClose()} centered>
                 <Modal.Body>
@@ -116,7 +116,8 @@ export class AddTask extends Component {
                                     value={this.state.userSelected}
                                     onChange={this.onInputChange}
                                 >
-                                    {this.state.users.map((user) => (
+                                    <option disabled selected value> -- select an option -- </option>
+                                    {users.map((user) => (
                                         <option value={user.username} key={user._id}>
                                             {user.username}
                                         </option>
@@ -133,7 +134,7 @@ export class AddTask extends Component {
                                     value={this.state.status}
                                     onChange={this.onInputChange}
                                 >
-                                    {this.state.listStatus.map((state) => (
+                                    {listStatus.map((state) => (
                                         <option value={state} key={state}>
                                             {state}
                                         </option>
