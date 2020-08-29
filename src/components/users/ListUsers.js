@@ -39,6 +39,7 @@ export class ListUsers extends Component {
 
     handleChange(e) {
         const query = e.target.value
+        //console.log("QUERYYY", query);
         this.setState({ query })
         if (query === '') {
             this.getAllUsers();
@@ -48,8 +49,9 @@ export class ListUsers extends Component {
     searchUser(e) {
         e.preventDefault();
         const query = this.state.query
+        console.log("QUERRY", query);
 
-        this.usersService.searchUser(query).then((res)=>{
+        this.state.usersService.searchUser(query).then((res)=>{
             this.setState({ users: res.data.body })
         })
     }

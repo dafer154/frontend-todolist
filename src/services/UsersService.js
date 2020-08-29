@@ -29,6 +29,6 @@ export default class UsersService {
     }
 
     searchUser(query){
-        return axios.post(`${this.api.url}/search`, query)
+        return axios.post(`${this.api.url}/search`, {query: query})
     }
 }
