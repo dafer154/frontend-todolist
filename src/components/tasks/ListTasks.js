@@ -162,10 +162,16 @@ export class ListTasks extends Component {
         }
     }
 
+    /**
+     * Method that conditions if you stay editing a Task, and set the variable id 
+     */
     editTask = (id) => {
         this.setState({ createtask: true, editing: true, id: id })
     }
 
+    /**
+     * Method for call the API Delete Tasks
+    */
     deleteTask = (id) => {
         if (window.confirm("Are you sure delete this Task?")) {
             this.state.tasksService.deleteTask(id).then((res) => {
@@ -179,21 +185,9 @@ export class ListTasks extends Component {
     }
 
 
-    messageAlert = (value) => {
-        switch (value) {
-            case 'edit':
-                return this.setState({ messageAlert: "Success EDIT" })
-            case 'delete':
-                return this.setState({ messageAlert: "Success DELETE" })
-            case 'add':
-                return this.setState({ messageAlert: "Success ADD" })
-            case 'unassign':
-                return this.setState({ messageAlert: "Success UNASSIGN user" })
-            default:
-                break;
-        }
-    }
-
+    /**
+     * Method that allow unassign a User in a Task 
+     */
     unassignUser = (id) => {
         if (window.confirm("Are you sure delete this User in the task?")) {
             this.state.tasksService.unassignUser(id).then((res) => {

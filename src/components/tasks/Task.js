@@ -11,18 +11,33 @@ export class Task extends Component {
         task: this.props.task
     }
 
+    /**
+     * Method that send the variable id to the component parent, 
+     * and can edit the Task 
+     */
     editTask = (id) => {
         this.props.handleEdit(id);
     }
 
+    /**
+     * Method that send the variable id to the component parent, 
+     * and can delete the Task 
+    */
     deleteTask = (id) => {
         this.props.handleDelete(id);
     }
 
+    /**
+     * Method that send the variable id to the component parent, 
+     * and can unassign a User to the Task 
+     */
     unassignUser = (id) => {
         this.props.handleUnassign(id);
     }
 
+    /**
+     * Method allow change the color depend of the status of the Task 
+     */
     listColors = (value) => {
         switch (value) {
             case 'Open':

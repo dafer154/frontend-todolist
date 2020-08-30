@@ -45,7 +45,7 @@ export class AddUser extends Component {
     }
 
     /**
-     * Method create or edit user 
+     * Method for create or edit user 
      */
     createUser = (e) => {
         e.preventDefault();

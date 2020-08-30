@@ -23,7 +23,9 @@ export class AddTask extends Component {
         id: this.props.id,
     };
 
-
+    /**
+     * Method for consume API getAllUsers and fill the list
+     */
     getAllUsers = () => {
         this.state.usersService.getAllUsers().then((res) => {
             const allUsers = res.data.body;
@@ -31,16 +33,27 @@ export class AddTask extends Component {
         })
     }
 
+    /**
+     * Change values on the inputs 
+     */
     onInputChange = (e) => {
         this.setState({ [e.target.name]: e.target.value });
     };
 
+    
+    /**
+        Close the modal, if was success the edit and save send variable action for show the toast
+     */
     handleClose = () => {
         this.setState({ show: !this.state.show, id: '', editing: false }, () => {
             this.props.handleShow(this.state.show, this.state.actionSuccess)
         })
     }
 
+
+    /**
+     * Consume API taskId for fill the form and edit task
+     */
     taskGetById = () => {
         this.state.taskService.taskGetByid(this.state.id).then((res) => {
             const task = res.data.body
@@ -54,6 +67,9 @@ export class AddTask extends Component {
         })
     }
 
+    /**
+     * Method for create or edit Task 
+     */
     createTask = (e) => {
         e.preventDefault();
         const newTask = {
@@ -86,11 +102,6 @@ export class AddTask extends Component {
             this.taskGetById();
         } else return false
     }
-
-    onChangeDate = (date) => {
-        console.log(date);
-        this.setState({ date });
-    };
 
     render() {
 
