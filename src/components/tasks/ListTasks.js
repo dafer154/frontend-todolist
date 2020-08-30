@@ -4,7 +4,7 @@ import Task from './Task';
 import './styles/ListTask.css';
 import { Button } from 'react-bootstrap';
 import AddTask from './AddTask';
-import { Alerts } from '../shared/Alerts';
+import Alerts from '../shared/Alerts';
 
 export class ListTasks extends Component {
 
@@ -32,7 +32,7 @@ export class ListTasks extends Component {
      * Allow make a call to the api and classifed the tasks
      */
 
-    getAllTasks() {
+    getAllTasks = () => {
         this.setState({
             tasksAll: [],
             tasksOpen: [],
@@ -45,7 +45,7 @@ export class ListTasks extends Component {
             const tasksAll = res.data.body;
             const tasksOpen = tasksAll.filter((task) => task.status === 'Open');
             const tasksCompleted = tasksAll.filter((task) => task.status === 'Completed');
-            const tasksInProgress = tasksAll.filter((task) => task.status === 'In-Progress');
+            const tasksInProgress = tasksAll.filter((task) => task.status === 'In progress');
             const tasksArchived = tasksAll.filter((task) => task.status === 'Archived');
 
             this.setState({ tasksAll, tasksOpen, tasksCompleted, tasksInProgress, tasksArchived })
@@ -55,19 +55,19 @@ export class ListTasks extends Component {
     /**
      * Allow select the option ['Open', 'In-Progress', 'Archived', 'Completed'] on the checkbox 
      */
-    selectStatus(e, label) {
+    selectStatus = (e, label) => {
         this.setState({ initialStatus: label, query: '' })
     }
 
     /*
         Show The component CREATE and EDIT task
     */
-    actionAddTask(e) {
+    actionAddTask = (e) => {
         e.preventDefault();
         this.setState({ createtask: true })
     }
 
-    changeShowModal(value, action) {
+    changeShowModal = (value, action) => {
 
         //Set values to emptys
         this.setState({ createtask: value, id: "", editing: false });
@@ -89,8 +89,8 @@ export class ListTasks extends Component {
      * List of the checkbox ['Open', 'In-Progress', 'Completed', 'Archived']
      */
 
-    listStatus() {
-        const status = ['Open', 'In-Progress', 'Completed', 'Archived']
+    listStatus = () => {
+        const status = ['Open', 'In progress', 'Completed', 'Archived']
         return status.map((state, i) => {
             return (
                 <div key={i}>
@@ -114,7 +114,7 @@ export class ListTasks extends Component {
      * getAllTasks() for field all the tasks
      */
 
-    handleChange(e) {
+    handleChange = (e) => {
         const query = e.target.value
         this.setState({ query })
         if (query === '') {
@@ -127,7 +127,7 @@ export class ListTasks extends Component {
      * @param {e}
      * Function allow search a task when you make a click or enter in the button
      */
-    searchTask(e) {
+    searchTask = (e) => {
         e.preventDefault();
         const status = this.state.initialStatus;
         const query = this.state.query
@@ -139,7 +139,7 @@ export class ListTasks extends Component {
                     this.setState({ tasksOpen: filteredOpen })
                 })
                 break
-            case 'In-Progress':
+            case 'In progress':
                 this.state.tasksService.searchTask(query, status).then((res) => {
                     const filteredInProgress = res.data.body;
                     this.setState({ tasksInProgress: filteredInProgress })
@@ -162,7 +162,7 @@ export class ListTasks extends Component {
         }
     }
 
-    editTask(id) {
+    editTask = (id) => {
         this.setState({ createtask: true, editing: true, id: id })
     }
 
@@ -179,7 +179,7 @@ export class ListTasks extends Component {
     }
 
 
-    messageAlert(value) {
+    messageAlert = (value) => {
         switch (value) {
             case 'edit':
                 return this.setState({ messageAlert: "Success EDIT" })
@@ -194,7 +194,7 @@ export class ListTasks extends Component {
         }
     }
 
-    unassignUser(id) {
+    unassignUser = (id) => {
         if (window.confirm("Are you sure delete this User in the task?")) {
             this.state.tasksService.unassignUser(id).then((res) => {
                 this.getAllTasks()
@@ -226,14 +226,14 @@ export class ListTasks extends Component {
                 <div><h1>List Tasks</h1></div>
                 {createtask ? <AddTask show={createtask} handleShow={(e, action) => this.changeShowModal(e, action)} edit={editing} id={id} /> : null}
                 <div className="add-task">
-                    <Button onClick={(e) => { this.actionAddTask(e) }}>add Task</Button>
+                    <Button onClick={(e) => { this.actionAddTask(e) }}>Add Task</Button>
                 </div>
                 <div className="container-search">
                     <form className="form-inline my-2 my-lg-0">
                         <input style={{ width: "85%" }}
                             className="form-control mr-sm-2"
                             type="search"
-                            placeholder="Search"
+                            placeholder="Search by Title"
                             aria-label="Search"
                             value={query}
                             onChange={(e) => this.handleChange(e)}
@@ -256,7 +256,7 @@ export class ListTasks extends Component {
                             <Task key={task._id} task={task} handleEdit={(id) => this.editTask(id)} handleDelete={(id) => this.deleteTask(id)} handleUnassign={(id) => this.unassignUser(id)} />
                         )
                     })}
-                </div> : initialStatus === "In-Progress" && tasksInProgress.length !== 0 ? <div className="wrapp-tasks">
+                </div> : initialStatus === "In progress" && tasksInProgress.length !== 0 ? <div className="wrapp-tasks">
                     {tasksInProgress.map((task) => {
                         return (
                             <Task key={task._id} task={task} handleEdit={(id) => this.editTask(id)} handleDelete={(id) => this.deleteTask(id)} handleUnassign={(id) => this.unassignUser(id)} />

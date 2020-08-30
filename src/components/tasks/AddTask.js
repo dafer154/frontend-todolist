@@ -18,13 +18,13 @@ export class AddTask extends Component {
         title: "",
         status: "Open",
         date: new Date(),
-        listStatus: ['Open', 'In-Progress', 'Completed', 'Archived'],
+        listStatus: ['Open', 'In progress', 'Completed', 'Archived'],
         editing: this.props.edit,
         id: this.props.id,
     };
 
 
-    getAllUsers() {
+    getAllUsers = () => {
         this.state.usersService.getAllUsers().then((res) => {
             const allUsers = res.data.body;
             this.setState({ users: allUsers, userSelected: allUsers.length !== 0 ? allUsers[0].username : '' })
@@ -35,13 +35,13 @@ export class AddTask extends Component {
         this.setState({ [e.target.name]: e.target.value });
     };
 
-    handleClose() {
+    handleClose = () => {
         this.setState({ show: !this.state.show, id: '', editing: false }, () => {
             this.props.handleShow(this.state.show, this.state.actionSuccess)
         })
     }
 
-    taskGetById() {
+    taskGetById = () => {
         this.state.taskService.taskGetByid(this.state.id).then((res) => {
             const task = res.data.body
             this.setState({

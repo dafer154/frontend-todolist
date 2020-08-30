@@ -15,17 +15,27 @@ export class AddUser extends Component {
         actionSuccess: false,
     }
 
+    /**
+     * Change values on the inputs 
+     */
     onInputChange = (e) => {
         this.setState({ [e.target.name]: e.target.value });
     };
 
-    handleClose() {
+    /**
+        Close the modal, if was success the edit and save send variable action for show the toast
+     */
+    handleClose = () => {
         this.setState({ show: !this.state.show, id: '', editing: false }, () => {
             this.props.handleShow(this.state.show, this.state.actionSuccess)
         })
     }
 
-    userGetById() {
+    /**
+     * Consume API userId for fill the input username
+     */
+
+    userGetById = () => {
         this.state.usersService.userGetByid(this.state.id).then((res) => {
             const user = res.data.body
             this.setState({
@@ -34,6 +44,9 @@ export class AddUser extends Component {
         })
     }
 
+    /**
+     * Method create or edit user 
+     */
     createUser = (e) => {
         e.preventDefault();
         const newUser = {

@@ -8,7 +8,7 @@ export default class UsersService {
     };
 
     getAllUsers() {
-        return axios.get(`${this.api.url}/getAll`)
+        return axios.get(`${this.api.url}/`)
     };
 
     addUsers(username) {
@@ -22,11 +22,11 @@ export default class UsersService {
     }
 
     editUser(user, id) {
-        return axios.put(`${this.api.url}/${id}`, user);
+        return axios.put(`${this.api.url}/edit/${id}`, user);
     }
 
     deleteUser(id) {
-        return axios.delete(`${this.api.url}/${id}`);
+        return axios.delete(`${this.api.url}/delete/${id}`);
     }
 
     searchUser(query) {

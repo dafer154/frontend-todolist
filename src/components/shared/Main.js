@@ -5,9 +5,9 @@ import Jumbotron from 'react-bootstrap/Jumbotron'
 const Main = () => {
     return (
         <Jumbotron>
-            <h1>Hello, To Everybody!</h1>
+            <h1>Hello Everyone!</h1>
             <p>
-                This project is similar to tool Trello, for enlarge the knowledge in ReactJS
+                This project is similar to the widely known tool Trello, and it was made for enlarging my knowledge in ReactJS
             </p>
             <p>
                 <NavLink

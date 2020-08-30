@@ -9,11 +9,20 @@ export class User extends Component {
         user: this.props.user
     }
 
-    editUser(id) {
+    /**
+     * Method that send the variable id to the component parent, 
+     * and can edit the user 
+     */
+    editUser = (id) => {
         this.props.handleEdit(id);
     }
 
-    deleteUser(id) {
+    
+    /**
+     * Method that send the variable id to the component parent, 
+     * and can delete the user 
+     */
+    deleteUser = (id) => {
         this.props.handleDelete(id);
     }
 

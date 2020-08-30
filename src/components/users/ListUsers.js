@@ -4,7 +4,7 @@ import User from './User';
 import './styles/ListUsers.css';
 import { Button } from 'react-bootstrap';
 import AddUser from './AddUser';
-import { Alerts } from '../shared/Alerts';
+import Alerts from '../shared/Alerts';
 
 export class ListUsers extends Component {
 
@@ -22,19 +22,31 @@ export class ListUsers extends Component {
         this.getAllUsers()
     }
 
-    getAllUsers() {
+    /**
+     * Method for call the API getAll users
+     */
+
+    getAllUsers = () => {
         this.setState({ users: [] });
         this.state.usersService.getAllUsers().then((res) => {
             this.setState({ users: res.data.body })
         })
     }
 
-    actionAddUser(e) {
+    /**
+     * 
+     * Allow show the component AddUser 
+     */
+    actionAddUser = (e) => {
         e.preventDefault();
         this.setState({ createuser: true })
     }
 
-    changeShowModal(value, action) {
+    /**
+     * 
+     * Method allow hidden the component AddUser, and receive the variable action if this was edit or save
+     */
+    changeShowModal = (value, action) => {
         this.setState({ createuser: value, id: "", editing: false });
         
         if (action) {
@@ -47,7 +59,11 @@ export class ListUsers extends Component {
         this.getAllUsers();
     }
 
-    handleChange(e) {
+    /**
+     * Allow update the variable query, for the search of a User, 
+     * if don't have any value call the method getAllUsers() 
+     */
+    handleChange = (e) => {
         const query = e.target.value
         this.setState({ query })
         if (query === '') {
@@ -55,7 +71,10 @@ export class ListUsers extends Component {
         }
     }
 
-    searchUser(e) {
+    /**
+     * Method that consume the API searchUser, how value entry the variable query 
+     */
+    searchUser = (e) => {
         e.preventDefault();
         const query = this.state.query
         this.state.usersService.searchUser(query).then((res) => {
@@ -63,11 +82,18 @@ export class ListUsers extends Component {
         })
     }
 
-    editUser(id) {
+    /**
+     * Method that conditions if you stay editing a User, and set the variable id 
+     */
+    editUser = (id) => {
         this.setState({ createuser: true, editing: true, id: id })
     }
 
-    deleteUser(id) {
+    /**
+     * Method for call the API Delete Users
+    */
+
+    deleteUser = (id) => {
         if (window.confirm("Are you sure delete this User?")) {
             this.state.usersService.deleteUser(id).then((res) => {
                 this.getAllUsers()
@@ -97,7 +123,7 @@ export class ListUsers extends Component {
                         <input style={{ width: "85%" }}
                             className="form-control mr-sm-2"
                             type="search"
-                            placeholder="Search"
+                            placeholder="Search by Username"
                             aria-label="Search"
                             value={query}
                             onChange={(e) => this.handleChange(e)}

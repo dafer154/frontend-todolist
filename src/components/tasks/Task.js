@@ -11,19 +11,19 @@ export class Task extends Component {
         task: this.props.task
     }
 
-    editTask(id) {
+    editTask = (id) => {
         this.props.handleEdit(id);
     }
 
-    deleteTask(id) {
+    deleteTask = (id) => {
         this.props.handleDelete(id);
     }
 
-    unassignUser(id) {
+    unassignUser = (id) => {
         this.props.handleUnassign(id);
     }
 
-    listColors(value) {
+    listColors = (value) => {
         switch (value) {
             case 'Open':
                 return "primary"
@@ -63,7 +63,7 @@ export class Task extends Component {
                     </div>
                     <Card.Footer className="footer-custom">
                         <Button variant="primary" onClick={() => this.editTask(task._id)}>Edit</Button>
-                        <Button variant="warning" onClick={() => this.unassignUser(task._id)}>Unassigment</Button>
+                        <Button variant="warning" onClick={() => this.unassignUser(task._id)}>Unassign</Button>
                     </Card.Footer>
                 </Card.Body>
             </Card>
