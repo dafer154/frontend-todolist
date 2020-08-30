@@ -42,7 +42,7 @@ export class Task extends Component {
         switch (value) {
             case 'Open':
                 return "primary"
-            case 'In-Progress':
+            case 'In progress':
                 return "secondary"
             case 'Completed':
                 return "success"

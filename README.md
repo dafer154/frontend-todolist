@@ -15,6 +15,8 @@
 
 *  [Setup](#setup)
 
+*  [Web Client](#webclient)
+
 ## General info
 
 To Do List is a Responsive WebApp to search, create, edit, delete, unassign tasks. Also search, create, edit, delete users. This project was developed using the MERN stack. The server was deployed in heroku and the client with github pages
@@ -61,6 +63,14 @@ $ npm install
 $ npm run start
 ```
 
+## Web Client
+
+* React for Client Web.
+* React-bootstrap
+* Axios
+* Timeago.js
+* React-router-dom
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
@@ -90,11 +100,5 @@ Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-## Web Client
 
-* React for Client Web.
-* React-bootstrap
-* Axios
-* Timeago.js
-* React-router-dom
 
