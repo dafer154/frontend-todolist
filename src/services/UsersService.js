@@ -3,6 +3,7 @@ import axios from "axios";
 export default class UsersService {
 
     api = {
+        // url: "http://localhost:4000/tasks"
         url: "https://condor-backend-todolist.herokuapp.com/users"
     };
 
@@ -24,11 +25,11 @@ export default class UsersService {
         return axios.put(`${this.api.url}/${id}`, user);
     }
 
-    deleteUser(id){
+    deleteUser(id) {
         return axios.delete(`${this.api.url}/${id}`);
     }
 
-    searchUser(query){
-        return axios.post(`${this.api.url}/search`, {query: query})
+    searchUser(query) {
+        return axios.post(`${this.api.url}/search`, { query: query })
     }
 }

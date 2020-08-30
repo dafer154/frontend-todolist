@@ -49,7 +49,6 @@ export class ListUsers extends Component {
 
     handleChange(e) {
         const query = e.target.value
-        //console.log("QUERYYY", query);
         this.setState({ query })
         if (query === '') {
             this.getAllUsers();

@@ -13,9 +13,6 @@ function App() {
         <Navigation></Navigation>
         <div className="container p-4">
         <Route path="/" exact component={Main}></Route>
-        {/* <Route path="/editNotes/:id" component={CreateNote}></Route>
-        <Route path="/createNotes" component={CreateNote}></Route>
-        <Route path="/updateNotes" component={UdateNote}></Route> */}
         <Route path="/listTasks" component={ListTasks}></Route>
         <Route path="/listUsers" component={ListUsers}></Route>
       </div>

@@ -3,8 +3,8 @@ import axios from "axios";
 export default class TasksService {
 
     api = {
-        url: "http://localhost:4000/tasks"
-        // url: "https://condor-backend-todolist.herokuapp.com/tasks"
+        // url: "http://localhost:4000/tasks"
+        url: "https://condor-backend-todolist.herokuapp.com/tasks"
     };
 
     getAllTasks() {
