@@ -1,11 +1,11 @@
-.wrapp-users{
+.wrapp-users {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     padding: 25px 98px 0px 98px;
 }
 
-.container-list{
+.container-list {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -13,6 +13,6 @@
     align-items: center;
 }
 
-.container-search{
+.container-search {
     width: 50%;
 }

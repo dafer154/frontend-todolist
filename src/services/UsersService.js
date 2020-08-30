@@ -3,7 +3,7 @@ import axios from "axios";
 export default class UsersService {
 
     api = {
-        url: "http://localhost:4000/users"
+        url: "https://condor-backend-todolist.herokuapp.com/users"
     };
 
     getAllUsers() {

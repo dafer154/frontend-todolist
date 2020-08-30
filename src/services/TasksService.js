@@ -4,6 +4,7 @@ export default class TasksService {
 
     api = {
         url: "http://localhost:4000/tasks"
+        // url: "https://condor-backend-todolist.herokuapp.com/tasks"
     };
 
     getAllTasks() {
@@ -32,6 +33,10 @@ export default class TasksService {
 
     unassignUser(id){
         return axios.put(`${this.api.url}/unassignUser/${id}`)
+    }
+
+    searchTask(query, status){
+        return axios.post(`${this.api.url}/search`, {query: query, status: status})
     }
 
 

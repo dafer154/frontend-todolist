@@ -1,4 +1,4 @@
-.container-list{
+.container-list {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -6,23 +6,24 @@
     align-items: center;
 }
 
-.wrapp-tasks{
+.wrapp-tasks {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
 }
 
-.container-search{
+.container-search {
     width: 50%;
 }
 
-.container-status{
+.container-status {
     display: flex;
     justify-content: space-around;
     width: 69%;
     padding: 40px;
+    flex-wrap: wrap;
 }
 
-.add-task{
-    padding-left: 87%;
+.add-task {
+    padding-left: 70%;
 }

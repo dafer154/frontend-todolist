@@ -5,7 +5,7 @@ import Jumbotron from 'react-bootstrap/Jumbotron'
 const Main = () => {
     return (
         <Jumbotron>
-            <h1>Hello, Everybody!</h1>
+            <h1>Hello, To Everybody!</h1>
             <p>
                 This project is similar to tool Trello, for enlarge the knowledge in ReactJS
             </p>

@@ -4,8 +4,6 @@ import UsersService from '../../services/UsersService';
 import Modal from 'react-bootstrap/Modal';
 import { Button } from 'react-bootstrap';
 import './styles/AddTask.css';
-import Form from 'react-bootstrap/Form'
-
 
 export class AddTask extends Component {
 
@@ -56,7 +54,7 @@ export class AddTask extends Component {
         })
     }
 
-    createNote = (e) => {
+    createTask = (e) => {
         e.preventDefault();
         const newTask = {
             title: this.state.title,
@@ -96,7 +94,7 @@ export class AddTask extends Component {
 
     render() {
 
-        const { show, editing, users, listStatus } = this.state
+        const { show, editing, users, listStatus, userSelected, status, title, content } = this.state
         return (
             <Modal show={show} onHide={() => this.handleClose()} centered>
                 <Modal.Body>
@@ -113,7 +111,7 @@ export class AddTask extends Component {
                                     name="userSelected"
                                     id="userSelected"
                                     className="form-control"
-                                    value={this.state.userSelected}
+                                    value={userSelected}
                                     onChange={this.onInputChange}
                                 >
                                     <option disabled selected value> -- select an option -- </option>
@@ -131,7 +129,7 @@ export class AddTask extends Component {
                                     name="status"
                                     id="statusSelected"
                                     className="form-control"
-                                    value={this.state.status}
+                                    value={status}
                                     onChange={this.onInputChange}
                                 >
                                     {listStatus.map((state) => (
@@ -150,7 +148,7 @@ export class AddTask extends Component {
                                     name="title"
                                     placeholder="Title"
                                     onChange={this.onInputChange}
-                                    value={this.state.title}
+                                    value={title}
                                     required
                                 />
                             </div>
@@ -165,7 +163,7 @@ export class AddTask extends Component {
                                     className="form-control"
                                     placeholder="Content"
                                     onChange={this.onInputChange}
-                                    value={this.state.content}
+                                    value={content}
                                     required
                                 ></textarea>
                             </div>
@@ -173,7 +171,7 @@ export class AddTask extends Component {
                     </div>
                 </Modal.Body>
                 <Modal.Footer>
-                    <form onSubmit={this.createNote}>
+                    <form onSubmit={this.createTask}>
                         <button type="submit" className="btn btn-success">Save</button>
                     </form>
                 </Modal.Footer>

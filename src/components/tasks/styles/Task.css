@@ -4,14 +4,14 @@
 }
 
 .card-custom {
-    margin: 8px
+    margin: 8px;
 }
 
-.custom-delete{
+.custom-delete {
     border-radius: 50px;
 }
 
-.custom-title{
+.custom-title {
     display: flex;
     justify-content: space-between;
     align-items: center;

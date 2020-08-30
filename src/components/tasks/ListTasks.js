@@ -4,12 +4,9 @@ import Task from './Task';
 import './styles/ListTask.css';
 import { Button } from 'react-bootstrap';
 import AddTask from './AddTask';
-
 import { Alerts } from '../shared/Alerts';
 
-
 export class ListTasks extends Component {
-
 
     state = {
         tasksService: new TasksServices(),
@@ -98,12 +95,13 @@ export class ListTasks extends Component {
             return (
                 <div key={i}>
                     <input
+                        style={{ marginRight: '8px' }}
                         type="radio"
                         label={state}
                         value={state}
                         checked={this.state.initialStatus === state}
                         onChange={(e) => this.selectStatus(e, state)}
-                    />{state}
+                    /><label>{state}</label>
                 </div>
             )
         })
@@ -132,34 +130,33 @@ export class ListTasks extends Component {
     searchTask(e) {
         e.preventDefault();
         const status = this.state.initialStatus;
-        const allTasks = this.state.tasksAll;
         const query = this.state.query
 
         switch (status) {
             case 'Open':
-                const tasksOpen = allTasks.filter((task) => task.status === 'Open');
-                const filteredOpen = tasksOpen.filter((open) => {
-                    return open.title.toLowerCase().indexOf(query) !== -1;
+                this.state.tasksService.searchTask(query, status).then((res) => {
+                    const filteredOpen = res.data.body;
+                    this.setState({ tasksOpen: filteredOpen })
                 })
-                return this.setState({ tasksOpen: filteredOpen })
+                break
             case 'In-Progress':
-                const tasksInProgress = allTasks.filter((task) => task.status === 'In-Progress');
-                const filteredInProgress = tasksInProgress.filter((progress) => {
-                    return progress.title.toLowerCase().indexOf(query) !== -1;
+                this.state.tasksService.searchTask(query, status).then((res) => {
+                    const filteredInProgress = res.data.body;
+                    this.setState({ tasksInProgress: filteredInProgress })
                 })
-                return this.setState({ tasksInProgress: filteredInProgress })
+                break
             case 'Completed':
-                const tasksCompleted = allTasks.filter((task) => task.status === 'Completed');
-                const filteredCompleted = tasksCompleted.filter((completed) => {
-                    return completed.title.toLowerCase().indexOf(query) !== -1;
+                this.state.tasksService.searchTask(query, status).then((res) => {
+                    const filteredCompleted = res.data.body;
+                    this.setState({ tasksCompleted: filteredCompleted })
                 })
-                return this.setState({ tasksCompleted: filteredCompleted })
+                break
             case 'Archived':
-                const tasksArchived = allTasks.filter((task) => task.status === 'Archived');
-                const filteredArchived = tasksArchived.filter((archived) => {
-                    return archived.title.toLowerCase().indexOf(query) !== -1;
+                this.state.tasksService.searchTask(query, status).then((res) => {
+                    const filteredArchived = res.data.body;
+                    this.setState({ tasksArchived: filteredArchived })
                 })
-                return this.setState({ tasksArchived: filteredArchived })
+                break
             default:
                 break;
         }
@@ -224,7 +221,7 @@ export class ListTasks extends Component {
         return (
             <div className="container-list">
                 {
-                    notification ? <Alerts message={"oeee"} /> : null
+                    notification ? <Alerts /> : null
                 }
                 <div><h1>List Tasks</h1></div>
                 {createtask ? <AddTask show={createtask} handleShow={(e, action) => this.changeShowModal(e, action)} edit={editing} id={id} /> : null}

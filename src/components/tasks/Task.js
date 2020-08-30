@@ -53,15 +53,12 @@ export class Task extends Component {
                         {task.content}
                     </Card.Text>
                     <div>
-
                         <strong>Status: </strong><Badge variant={this.listColors(task.status)}>{task.status}</Badge>
                     </div>
                     <div>
-
                         <strong>Author: </strong><span>{task.author}</span>
                     </div>
                     <div>
-
                         <strong>Date: </strong><span>{format(task.date)}</span>
                     </div>
                     <Card.Footer className="footer-custom">
