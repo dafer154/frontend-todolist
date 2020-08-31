@@ -189,7 +189,7 @@ export class ListTasks extends Component {
      * Method that allow unassign a User in a Task 
      */
     unassignUser = (id) => {
-        if (window.confirm("Are you sure delete this User in the task?")) {
+        if (window.confirm("Do you want to delete the user assigned?")) {
             this.state.tasksService.unassignUser(id).then((res) => {
                 this.getAllTasks()
                 this.setState({ notification: true })

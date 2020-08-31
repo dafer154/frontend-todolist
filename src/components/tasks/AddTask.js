@@ -57,13 +57,15 @@ export class AddTask extends Component {
     taskGetById = () => {
         this.state.taskService.taskGetByid(this.state.id).then((res) => {
             const task = res.data.body
-            this.setState({
-                userSelected: task.author,
-                content: task.content,
-                title: task.title,
-                status: task.status,
-                date: task.date
-            })
+            setTimeout(() => {
+                this.setState({
+                    userSelected: task.author,
+                    content: task.content,
+                    title: task.title,
+                    status: task.status,
+                    date: task.date
+                })
+            }, 400);
         })
     }
 
@@ -125,7 +127,7 @@ export class AddTask extends Component {
                                     value={userSelected}
                                     onChange={this.onInputChange}
                                 >
-                                    <option disabled selected value> -- select an option -- </option>
+                                    <option value=''>-- select and option --</option>
                                     {users.map((user) => (
                                         <option value={user.username} key={user._id}>
                                             {user.username}
@@ -171,6 +173,7 @@ export class AddTask extends Component {
                                     id="content"
                                     cols="5"
                                     rows="5"
+                                    maxLength="255"
                                     className="form-control"
                                     placeholder="Content"
                                     onChange={this.onInputChange}
